@@ -1,8 +1,41 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <br/>
-    <br/>
-    <br/>
-    <h1>{{ full_title }}</h1>
+
+    {% include 'guide/includes/pagination.html' %}
+
+    <!-- ======= Vacancies Section ======= -->
+    <section id="vacancies" class="services">
+        <div class="container">
+            <div class="row gx-5">
+                {% for vacancy in vacancies %}
+                    <div class="col-md-6 mt-4 mt-md-5">
+                        <div class="icon-box" style="color: tomato; font-size: 1.5rem">
+                            <i class="bi bi-binoculars"></i>
+                            <h4 class="d-inline">
+                                <a class="link-dark" href="{% url 'vacancy' vacancy.id %}">{{ vacancy.name }}</a>
+                            </h4>
+                        </div>
+
+                    <div class="salary-date">
+                        <p class="fs-3 text-danger"><strong>{{ vacancy.salary }}</strong></p>
+                        <p class="text-muted">{{ vacancy.date }}</p>
+                    </div>
+
+                        {% autoescape off %}
+                            <p>{{ vacancy.requirement }}</p>
+                        {% endautoescape %}
+
+                        {% for skill in vacancy.skills %}
+                            <span class="tag tag-pill tag-default">Default</span>
+{#                            <span class="tag tag-success">{{ skill }}</span>#}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section><!-- End Vacancies Section -->
+
+    {% include 'guide/includes/pagination.html' %}
+
 {% endblock %}
