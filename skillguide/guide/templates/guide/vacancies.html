@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load guide_skills_tags %}
 
 {% block content %}
 
@@ -26,17 +27,8 @@
                             <p>{{ vacancy.requirement }}</p>
                         {% endautoescape %}
 
-                        {% for skill in vacancy.skills %}
-{#                            <button type="button"#}
-{#                                    class="btn btn-sm skill-btn"#}
-{#                                    style="background-color: {{ skill.back }}; color: {{ color }}">#}
-{#                                {{ skill.name }}#}
-{#                            </button>#}
-                            <a href="{% url 'skill' '123' %}"
-                               class="btn btn-sm skill-btn"
-                               style="background-color: {{ skill.back }}; color: {{ skill.color }}">{{ skill.name }}
-                            </a>
-                        {% endfor %}
+                        {% skills_tags vacancy.skills %}
+
                     </div>
                 {% endfor %}
             </div>
