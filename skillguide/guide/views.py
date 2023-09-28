@@ -1,7 +1,10 @@
 import requests
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponseNotFound
 from guide.common import index_dict, SERVER_ARD, formatted_salary, string_hh_to_datetime
+
+BACK = '#ff6347'
+COLOR = '#f5f5f5'
 
 
 def index(request):
@@ -10,18 +13,20 @@ def index(request):
 
 def vacancies(request):
     data = index_dict()
-    per_page = 10
-    page = 0
-    if request.GET:
-        page = int(request.GET.get('page')) - 1
 
-    url = f'{SERVER_ARD}/vacancies?page={page}&per_page={per_page}'
+    params = {
+        'page': request.GET.get('page') if request.GET.get('page') else 0,
+        'per_page': request.GET.get('per_page') if request.GET.get('per_page') else 10,
+        'tag_id': request.GET.get('tag_id') if request.GET.get('tag_id') else None,
+        'query': request.GET.get('query') if request.GET.get('query') else None,
+    }
 
-    response = requests.get(url).json()
+    response = requests.get(f'{SERVER_ARD}/vacancies', params=params).json()
 
-    max_page = response['found'] // per_page + ((response['found'] % per_page) > 0)
+    max_page = response['found'] // params['per_page'] + ((response['found'] % params['per_page']) > 0)
 
-    data['pages'] = [{'page': i + 1, 'active': i == page} for i in range(max_page)]
+    data['pages'] = [{'page': i + 1, 'active': i == params['page']} for i in range(max_page)]
+    data['url_name'] = 'vacancies'
     data['vacancies'] = []
 
     for i in response['result']:
@@ -30,7 +35,7 @@ def vacancies(request):
         salary_from = formatted_salary(i["salary_from"], "от")
         salary_to = formatted_salary(i["salary_to"], "до")
 
-        _skills = [{'name': j['name'], 'back': '#ff6347', 'color': '#f5f5f5'} for j in response]
+        _skills = [{'name': j['name'], 'back': BACK, 'color': COLOR, 'id': j['id']} for j in response]
 
         data['vacancies'].append({
             'id': i['id'],
@@ -72,37 +77,47 @@ def vacancy(request, vacancy_id):
 
 def skills(request):
     data = index_dict()
+    data['skills'] = []
+    data['pages'] = []
+    data['url_name'] = 'skills'
 
+    per_page = 100
     page = 0
     if request.GET:
-        page = 1
+        page = int(request.GET.get('page')) - 1
 
-    url = f'{SERVER_ARD}/vacancies?page={page}'
-
+    url = f'{SERVER_ARD}/tags?page={page}&per_page={per_page}'
     response = requests.get(url).json()
-    data['vacancies'] = response['result']
 
-    return render(request, 'guide/boot.html', context=data)
+    found, result = response['found'], response['result']
 
+    max_page = found // per_page + ((found % per_page) > 0)
 
-def skill(request, skill_id):
-    return HttpResponse(f'Навык №{skill_id}')
+    _skills = [{'name': f'{j["name"]} | {j["vacancies"]}', 'back': BACK, 'color': COLOR, 'id': j['id']} for j in result]
+
+    data['pages'] = [{'page': i + 1, 'active': i == page} for i in range(max_page)]
+    data['skills'] = _skills
+
+    return render(request, 'guide/skills.html', context=data)
 
 
 def querys(request):
-    return HttpResponse('Запросы')
+    data = index_dict()
+    data['querys'] = requests.get(f'{SERVER_ARD}/query',).json()
 
-
-def query(request, query_id):
-    return HttpResponse(f'Запрос №{query_id}')
+    return render(request, 'guide/querys.html', context=data)
 
 
 def analysis(request):
-    return HttpResponse(f'Анализ навыков')
+    data = index_dict()
+
+    return render(request, 'guide/analysis.html', context=data)
 
 
 def about(request):
-    return HttpResponse(f'О проекте')
+    data = index_dict()
+
+    return render(request, 'guide/about.html', context=data)
 
 
 def page_not_found(request, exception):

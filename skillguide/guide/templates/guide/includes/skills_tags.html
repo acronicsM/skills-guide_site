@@ -1,0 +1,6 @@
+{% for skill in skills %}
+    <a href="{% url 'vacancies' %}?tag_id={{ skill.id }}"
+       class="btn btn-sm skill-btn"
+       style="background-color: {{ skill.back }}; color: {{ skill.color }}">{{ skill.name }}
+    </a>
+{% endfor %}

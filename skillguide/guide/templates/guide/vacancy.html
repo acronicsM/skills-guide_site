@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
+{% load guide_skills_tags %}
 
 {% block content %}
-    <section id="vacancies" class="services">
+    <!-- ======= Vacancy Section ======= -->
+    <section id="vacancy" class="services">
         <div class="container">
             <h1>{{ vacancy_data.name }}</h1>
 
@@ -16,6 +18,8 @@
             {% autoescape off %}
                 <p>{{ vacancy_data.description }}</p>
             {% endautoescape %}
+
+            {% skills_tags vacancy_data.skills %}
         </div>
-    </section>
+    </section><!-- End Vacancy Section -->
 {% endblock %}
