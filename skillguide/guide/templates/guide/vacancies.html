@@ -17,18 +17,25 @@
                             </h4>
                         </div>
 
-                    <div class="salary-date">
-                        <p class="fs-3 text-danger"><strong>{{ vacancy.salary }}</strong></p>
-                        <p class="text-muted">{{ vacancy.date }}</p>
-                    </div>
+                        <div class="salary-date">
+                            <p class="fs-3 text-danger"><strong>{{ vacancy.salary }}</strong></p>
+                            <p class="text-muted">{{ vacancy.date }}</p>
+                        </div>
 
                         {% autoescape off %}
                             <p>{{ vacancy.requirement }}</p>
                         {% endautoescape %}
 
                         {% for skill in vacancy.skills %}
-                            <span class="tag tag-pill tag-default">Default</span>
-{#                            <span class="tag tag-success">{{ skill }}</span>#}
+{#                            <button type="button"#}
+{#                                    class="btn btn-sm skill-btn"#}
+{#                                    style="background-color: {{ skill.back }}; color: {{ color }}">#}
+{#                                {{ skill.name }}#}
+{#                            </button>#}
+                            <a href="{% url 'skill' '123' %}"
+                               class="btn btn-sm skill-btn"
+                               style="background-color: {{ skill.back }}; color: {{ skill.color }}">{{ skill.name }}
+                            </a>
                         {% endfor %}
                     </div>
                 {% endfor %}
