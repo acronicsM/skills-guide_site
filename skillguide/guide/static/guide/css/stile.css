@@ -2,8 +2,13 @@
     margin: 40px;
 }
 
-.salary-date {
+.salary-date{
   display: flex;
   justify-content: space-between;
   box-sizing: border-box;
+}
+
+a.skill-btn{
+    margin-top: 1%;
+    text-decoration: none;
 }

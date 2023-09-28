@@ -1,8 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <br/>
-    <br/>
-    <br/>
-    <h1>{{ full_title }}</h1>
+    <section id="vacancies" class="services">
+        <div class="container">
+            <h1>{{ vacancy_data.name }}</h1>
+
+            <div class="salary-date">
+                <p class="fs-3 text-danger"><strong>{{ vacancy_data.salary }}</strong></p>
+                <p class="text-muted">{{ vacancy_data.date }}</p>
+            </div>
+
+            <p>Требуемый опыт работы: {{ vacancy_data.experience }}</p>
+            <p>{{ vacancy_data.employment }}, {{ vacancy_data.schedule }}</p>
+
+            {% autoescape off %}
+                <p>{{ vacancy_data.description }}</p>
+            {% endautoescape %}
+        </div>
+    </section>
 {% endblock %}
