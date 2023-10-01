@@ -1,14 +1,27 @@
 import requests
 from django.shortcuts import render
 from django.http import HttpResponseNotFound
-from guide.common import index_dict, SERVER_ARD, formatted_salary, string_hh_to_datetime
-
-BACK = '#ff6347'
-COLOR = '#f5f5f5'
+from guide.common import index_dict, SERVER_ARD, formatted_salary, string_hh_to_datetime, BACK, COLOR
 
 
 def index(request):
-    return render(request, 'guide/index.html', context=index_dict())
+    data = index_dict()
+
+    response = requests.get(f'{SERVER_ARD}').json()
+
+    for i in response['top_vacancies']:
+        salary_from = formatted_salary(i["salary_from"], "от")
+        salary_to = formatted_salary(i["salary_to"], "до")
+
+        i['salary'] = f'{salary_from} {salary_to}'
+
+    for i in response['top_skills']:
+        i['min'] = formatted_salary(i["min"], "от")
+        i['max']= formatted_salary(i["max"], "до")
+
+    data['response'] = response
+
+    return render(request, 'guide/index.html', context=data)
 
 
 def vacancies(request):
@@ -104,6 +117,9 @@ def skills(request):
 def querys(request):
     data = index_dict()
     data['querys'] = requests.get(f'{SERVER_ARD}/query',).json()
+
+    for k, v in data['querys'].items():
+        v['salary'] = f'{formatted_salary(v["min"], "от")} {formatted_salary(v["max"], "до")}'
 
     return render(request, 'guide/querys.html', context=data)
 

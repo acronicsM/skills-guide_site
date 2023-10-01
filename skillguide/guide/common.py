@@ -1,16 +1,17 @@
 from datetime import datetime
 
-Title = 'Путеводитель по навыкам'
-Full_Title = 'Путеводитель по навыкам начинающего Python-разработчика: путь в профессию'
+Title = 'Python Skills Tracker'
 
 # SERVER_ARD = 'http://51.250.48.253:5000'
 SERVER_ARD = 'http://127.0.0.1:5000'
+
+BACK = '#ff6347'
+COLOR = '#f5f5f5'
 
 
 def index_dict():
     return {
         'title': Title,
-        'full_title': Full_Title,
     }
 
 

@@ -6,37 +6,21 @@
     <section id="querys" class="services">
         <div class="container">
             <div class="row gx-5">
-                {% for query in querys %}
+                {% for key, value in querys.items %}
                     <div class="col-md-6 mt-4 mt-md-5">
                         <div class="icon-box" style="color: tomato; font-size: 1.5rem">
                             <i class="bi bi-binoculars"></i>
                             <h4 class="d-inline">
                                 <a class="link-dark"
-                                   href="{% url 'vacancies' %}?query={{ query.id }}">{{ query.name }}</a>
+                                   href="{% url 'vacancies' %}?query={{ key }}">{{ value.name }}</a>
                             </h4>
                         </div>
 
                         <div class="salary-date">
-                            <p class="fs-3 text-danger"><strong>от 100 000 ₽ до 250 000 ₽</strong></p>
+                            <p class="fs-3 text-danger"><strong>{{ value.salary }}</strong></p>
                         </div>
 
-                        <p><strong>Количество вакансий: 9 </strong></p>
-
-                        <div class="row gx-5">
-                            <div class="col-md-6 mt-4 mt-md-5">
-                                <p>Вакансия 1</p>
-                            </div>
-                            <div class="col-md-6 mt-4 mt-md-5">
-                                <p>Вакансия 1</p>
-                            </div>
-                            <div class="col-md-6 mt-4 mt-md-5">
-                                <p>Вакансия 1</p>
-                            </div>
-                            <div class="col-md-6 mt-4 mt-md-5">
-                                <p>Вакансия 1</p>
-                            </div>
-                        </div>
-
+                        <p><strong>Количество вакансий: {{ value.count }} </strong></p>
                     </div>
                 {% endfor %}
             </div>
