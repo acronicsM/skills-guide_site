@@ -1,8 +1,84 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <br/>
-    <br/>
-    <br/>
-    <h1>{{ full_title }}</h1>
+    <!-- Блок info -->
+    <div class="container mt-4">
+        <div class="alert alert-info">
+            Сегодня на сайте доступно {{ response.count_vacancies }} вакансий и {{ response.count_skills }} навыков
+        </div>
+    </div>
+
+    <!-- Блок Топ вакансий -->
+    <div class="container mt-4">
+        <h2>Топ вакансий</h2>
+        <div class="row">
+            {% for vacancy in response.top_vacancies %}
+                {#                <div class="col-md-6 col-lg-3">#}
+                <div class="col-lg-6 col-md-6">
+                    <div class="top_card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a class="link-dark" href="{% url 'vacancy' vacancy.id %}">{{ vacancy.name }}</a>
+                            </h5>
+
+                            <div class="salary-date">
+                                <p class="fs-3 text-danger"><strong>{{ vacancy.salary }}</strong></p>
+                            </div>
+
+                            {% autoescape off %}
+                                <p>{{ vacancy.requirement }}</p>
+                            {% endautoescape %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Блок Топ навыков -->
+    <div class="container mt-4">
+        <h2>Топ навыков</h2>
+        <div class="row">
+            {% for skill in response.top_skills %}
+                <div class="col-md-2 col-lg-2">
+                    <div class="card" style="margin-top: 1rem">
+                        <!-- Карточка (border-primary - цвет границ карточки) -->
+                        <div class="card border-primary">
+                            <!-- Шапка (bg-primary - цвет фона, text-white - цвет текста) -->
+                            <div class="card-header bg-primary text-white">
+                                {{ skill.name }}
+                            </div>
+                            <!-- Текстовый контент -->
+                            <div class="card-body">
+                                <strong>{{ skill.min }}</strong>
+                                <br>
+                                <strong>{{ skill.max }}</strong>
+                                <br>
+                                <br>
+                                <a href="{% url 'vacancies' %}?tag_id={{ skill.id }}"
+                                   class="btn btn-danger">Посмотреть</a>
+                            </div>
+                        </div><!-- Конец карточки -->
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Блок Изображения -->
+    <div class="container mt-4">
+        <h2>Анализ</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <img src="путь_к_изображению_1" alt="Изображение 1" class="img-fluid mb-2">
+                <img src="путь_к_изображению_2" alt="Изображение 2" class="img-fluid mb-2">
+            </div>
+            <div class="col-md-6">
+                <img src="путь_к_изображению_3" alt="Изображение 3" class="img-fluid mb-2">
+                <img src="путь_к_изображению_4" alt="Изображение 4" class="img-fluid mb-2">
+            </div>
+        </div>
+    </div>
+
+
 {% endblock %}
