@@ -37,8 +37,18 @@ def vacancy(request, vacancy_id):
     data = index_dict()
 
     data['vacancy_data'] = get_api_response('vacancy', vacancy_id=vacancy_id)
+    data['vacancy_id'] = vacancy_id
 
     return render(request, 'guide/vacancy.html', context=data)
+
+
+def vacancy_response(request, vacancy_id):
+    data = index_dict()
+
+    data['vacancy_data'] = get_api_response('vacancy', vacancy_id=vacancy_id)
+    data['vacancy_id'] = vacancy_id
+
+    return render(request, 'guide/vacancy_response.html', context=data)
 
 
 def skills(request):
@@ -78,3 +88,4 @@ def about(request):
 
 def page_not_found(request, exception):
     return HttpResponseNotFound(f'Страница не найдена')
+
