@@ -15,11 +15,16 @@
             <p>Требуемый опыт работы: {{ vacancy_data.experience }}</p>
             <p>{{ vacancy_data.employment }}, {{ vacancy_data.schedule }}</p>
 
+            {#            <button type="button" class="btn btn-primary mt-2">Откликнуться</button>#}
+            <a href="{% url 'response' vacancy_id %}" class="btn btn-info" role="button">Откликнуться</a>
+
             {% autoescape off %}
                 <p>{{ vacancy_data.description }}</p>
             {% endautoescape %}
 
             {% skills_tags vacancy_data.skills %}
+
+            <br><br>
         </div>
     </section><!-- End Vacancy Section -->
 {% endblock %}
