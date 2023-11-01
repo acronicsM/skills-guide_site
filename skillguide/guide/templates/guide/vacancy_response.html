@@ -19,38 +19,9 @@
 
             {% autoescape off %}
                 <p>{{ vacancy_data.requirement }}</p>
+                <p>{{ latter }}</p>
             {% endautoescape %}
-
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="collapse navbar-collapse">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#" onclick="showInput('GPT')">Сопроводельное GPT</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" onclick="showInput('Яндекс')">Сопроводельное Яндекс</a>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#" onclick="showInput('GPT')">Собес GPT</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" onclick="showInput('Яндекс')">Собес Яндекс</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-
-            <input type="text" id="textInput" placeholder="Название пункта будет тут" style="display: none;"
-                   class="form-control mt-3">
 
         </div>
     </section><!-- End Vacancy Section -->
-
-    <script>
-        function showInput(text) {
-            var input = document.getElementById('textInput');
-            input.style.display = 'block';
-            input.value = text;
-        }
-    </script>
 {% endblock %}

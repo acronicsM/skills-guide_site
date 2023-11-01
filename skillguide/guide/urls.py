@@ -9,5 +9,6 @@ urlpatterns = [
     path('querys/', views.querys, name='querys'),
     path('analysis/', views.analysis, name='analysis'),
     path('about/', views.about, name='about'),
-    path('vacancy_response/<int:vacancy_id>', views.vacancy_response, name='response'),
+    path('vacancy_response/<int:vacancy_id>/<type_gpt>', views.vacancy_response, name='response'),
+    path('vacancy_interview', views.interview, name='interview'),
 ]

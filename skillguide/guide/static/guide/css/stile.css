@@ -16,3 +16,33 @@ a.skill-btn{
     margin-top: 1%;
     text-decoration: none;
 }
+
+a.yandex{
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #7137ff;
+    --bs-btn-border-color: #7137ff;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #7137ff;
+    --bs-btn-hover-border-color: #7137ff;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #7137ff;
+    --bs-btn-active-border-color: #7137ff;
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #7137ff;
+    --bs-btn-disabled-border-color: #7137ff;
+}
+
+a.openai{
+    --bs-btn-color: #fff;
+    --bs-btn-bg: black;
+    --bs-btn-border-color: black;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: black;
+    --bs-btn-hover-border-color: black;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: black;
+    --bs-btn-active-border-color: black;
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: black;
+    --bs-btn-disabled-border-color: black;
+}
