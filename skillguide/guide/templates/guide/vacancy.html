@@ -15,8 +15,10 @@
             <p>Требуемый опыт работы: {{ vacancy_data.experience }}</p>
             <p>{{ vacancy_data.employment }}, {{ vacancy_data.schedule }}</p>
 
-            {#            <button type="button" class="btn btn-primary mt-2">Откликнуться</button>#}
-            <a href="{% url 'response' vacancy_id %}" class="btn btn-info" role="button">Откликнуться</a>
+            <a href="{{ vacancy_data.url }}" class="btn btn-info" role="button">Откликнуться</a>
+            <a href="{% url 'response' vacancy_id 'yandex'%}" class="btn btn-info yandex" role="button">Сопроводительное письмо(Яндекс)</a>
+            <a href="{% url 'response' vacancy_id 'openai'%}" class="btn btn-info openai" role="button">Сопроводительное письмо(OpenAI)</a>
+            <a href="{% url 'interview' %}" class="btn btn-info" role="button">Тестовое собеседование</a>
 
             {% autoescape off %}
                 <p>{{ vacancy_data.description }}</p>

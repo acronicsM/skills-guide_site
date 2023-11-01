@@ -16,6 +16,7 @@ VACANCY_RESPONSE = {
     'schedule': coming_soon,
     'salary': coming_soon,
     'skills': coming_soon,
+    'url': coming_soon,
 }
 
 
@@ -62,5 +63,6 @@ def vacancy(vacancy_id: int):
     VACANCY_RESPONSE['schedule'] = response['schedule']
     VACANCY_RESPONSE['salary'] = f'{salary_from} {salary_to}'
     VACANCY_RESPONSE['skills'] = vacancy_skills(vacancy_id)
+    VACANCY_RESPONSE['url'] = response['url']
 
     return VACANCY_RESPONSE

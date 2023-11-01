@@ -3,7 +3,8 @@ import requests
 from django.shortcuts import render
 from django.http import HttpResponseNotFound
 
-from .common import index_dict, SERVER_ARD, formatted_salary, string_hh_to_datetime, BACK, COLOR
+from .gpt_api.latter import get_letter
+from .common import index_dict
 from .skills_guide_api import get_api_response
 
 
@@ -42,13 +43,23 @@ def vacancy(request, vacancy_id):
     return render(request, 'guide/vacancy.html', context=data)
 
 
-def vacancy_response(request, vacancy_id):
+async def vacancy_response(request, vacancy_id, type_gpt):
     data = index_dict()
 
     data['vacancy_data'] = get_api_response('vacancy', vacancy_id=vacancy_id)
     data['vacancy_id'] = vacancy_id
 
+    latter = await get_letter(data['vacancy_data'], type_gpt)
+
+    data['latter'] = latter
+
     return render(request, 'guide/vacancy_response.html', context=data)
+
+
+def interview(request):
+    data = index_dict()
+
+    return render(request, 'guide/vacancy_interview.html', context=data)
 
 
 def skills(request):
