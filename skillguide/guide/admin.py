@@ -1,3 +1,16 @@
 from django.contrib import admin
+from django.utils.html import format_html
+from .models import SkillColor
+from .forms import MyModelForm
 
-# Register your models here.
+
+@admin.register(SkillColor)
+class SkillColorAdmin(admin.ModelAdmin):
+    form = MyModelForm
+    list_display = 'skill', 'display_color'
+
+    def display_color(self, obj):
+        return format_html('<div style="background-color: {}; color: {};">{}</div>',
+                           obj.background, obj.color, obj.skill)
+
+    display_color.short_description = 'Пример Отображения'

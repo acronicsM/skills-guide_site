@@ -21,7 +21,7 @@ def vacancies(request):
     data['url_name'] = 'vacancies'
 
     params = {
-        'page': request.GET.get('page') if request.GET.get('page') else 0,
+        'page': (int(request.GET.get('page')) - 1) if request.GET.get('page') else 0,
         'per_page': request.GET.get('per_page') if request.GET.get('per_page') else 10,
         'tag_id': request.GET.get('tag_id') if request.GET.get('tag_id') else None,
         'query': request.GET.get('query') if request.GET.get('query') else None,

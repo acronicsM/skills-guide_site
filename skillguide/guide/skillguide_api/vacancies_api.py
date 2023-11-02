@@ -1,6 +1,7 @@
 import requests
 
-from ..common import SERVER_ARD, formatted_salary, BACK, COLOR, string_hh_to_datetime
+from ..models import SkillColor
+from ..common import SERVER_ARD, formatted_salary, string_hh_to_datetime
 
 coming_soon = 'coming soon'
 api_address = 'vacancies'
@@ -19,6 +20,8 @@ VACANCY_RESPONSE = {
     'url': coming_soon,
 }
 
+COLORS_DICT = dict()
+
 
 def vacancies(**kwargs):
     response = requests.get(f'{SERVER_ARD}/{api_address}', params=kwargs).json()
@@ -26,7 +29,7 @@ def vacancies(**kwargs):
     max_page = response['found'] // kwargs['per_page'] + ((response['found'] % kwargs['per_page']) > 0)
 
     VACANCIES_RESPONSE['pages'] = [{'page': i + 1, 'active': i == kwargs['page']} for i in range(max_page)]
-
+    VACANCIES_RESPONSE['vacancies'].clear()
     for i in response['result']:
         salary_from = formatted_salary(i["salary_from"], "от")
         salary_to = formatted_salary(i["salary_to"], "до")
@@ -46,7 +49,29 @@ def vacancies(**kwargs):
 def vacancy_skills(vacancy_id: int):
     response = requests.get(f'{SERVER_ARD}/{api_address}/{vacancy_id}/{api_vacancy_tags}').json()
 
-    return [{'name': j['name'], 'back': BACK, 'color': COLOR, 'id': j['id']} for j in response['skills']]
+    skill_response = []
+    for j in response['skills']:
+        skill_name = j['name'].lower().strip()
+
+        if skill_name in COLORS_DICT:
+            name, back, color = skill_name, COLORS_DICT[skill_name][0], COLORS_DICT[skill_name][1]
+        else:
+            skill_obj = SkillColor.objects.filter(skill=skill_name).first()
+            if not skill_obj:
+                skill_obj = SkillColor.objects.create(skill=skill_name)
+
+            name, back, color = skill_name, skill_obj.background, skill_obj.color
+
+            COLORS_DICT[name] = (back, color)
+
+        skill_response.append({
+            'name': name.capitalize(),
+            'back': back,
+            'color': color,
+            'id': j['id']
+        })
+
+    return skill_response
 
 
 def vacancy(vacancy_id: int):
