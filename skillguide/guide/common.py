@@ -4,9 +4,6 @@ Title = 'Python Skills Tracker'
 
 SERVER_ARD = 'http://127.0.0.1:5000'
 
-BACK = '#ff6347'
-COLOR = '#f5f5f5'
-
 
 def index_dict():
     return {
