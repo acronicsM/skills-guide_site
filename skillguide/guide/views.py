@@ -79,6 +79,11 @@ def skills(request):
 
 
 def querys(request):
+    if request.method == 'POST':
+        if 'id' in request.POST:
+            response = get_api_response('querys_DELETE', id=request.POST['id'])
+            print(response)
+
     data = index_dict()
     data['querys'] = get_api_response('querys')
 
