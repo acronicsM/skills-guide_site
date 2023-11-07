@@ -4,6 +4,9 @@ Title = 'Python Skills Tracker'
 
 SERVER_ARD = 'http://127.0.0.1:5000'
 
+KEY_ROLES = {'8ba12641a0ba50c4b86006c6': 'admin', 'user': 'user'}
+API_SECRET_KEY = 'dsfdsf4dffdsf4DFdf09034DSFf343edcfVbhkmnnppp'
+
 
 def index_dict():
     return {
