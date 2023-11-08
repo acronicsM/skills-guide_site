@@ -1,9 +1,9 @@
-from django.forms import ModelForm
+from django import forms
 from django.forms.widgets import TextInput
 from .models import SkillColor
 
 
-class MyModelForm(ModelForm):
+class MyModelForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(MyModelForm, self).__init__(*args, **kwargs)
         if self.instance:
@@ -21,3 +21,12 @@ class MyModelForm(ModelForm):
             "background": TextInput(attrs={"type": "color"}),
             "color": TextInput(attrs={"type": "color"}),
         }
+
+
+class AddQueriesForm(forms.Form):
+    name = forms.CharField(max_length=100, label='Поисковый запрос:')
+
+
+class AddAggregatorsForm(forms.Form):
+    id = forms.CharField(max_length=50, label='Агрегатор:')
+

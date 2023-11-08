@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <!-- ======= Aggregators Section ======= -->
+    <section id="aggregators" class="services">
+        <div class="container">
+
+           {% include 'guide/includes/admin/add_aggregators.html' %}
+            <br>
+           {% include 'guide/includes/admin/start_parser.html' %}
+
+            <div class="row gx-5">
+                {% for agg in aggregators %}
+                    <div class="col-md-6 mt-4 mt-md-5">
+                        <div class="icon-box" style="color: tomato; font-size: 1.5rem">
+                            <h4 class="d-inline">
+                                <a class="link-dark"
+                                   href="{% url 'home' %}">{{ agg }}
+                                </a>
+                            </h4>
+
+                             {% include 'guide/includes/admin/del_aggregators.html' %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section><!-- End Aggregators Section -->
+
+{% endblock %}

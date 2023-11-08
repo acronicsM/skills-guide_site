@@ -46,3 +46,7 @@ a.openai{
     --bs-btn-disabled-bg: black;
     --bs-btn-disabled-border-color: black;
 }
+
+.form-inline {
+  flex-wrap: nowrap;
+}

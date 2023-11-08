@@ -10,39 +10,58 @@
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
-   	<link rel="apple-touch-icon" sizes="180x180" href="{% static 'guide/images/apple-touch-icon.png' %}">
-	<link rel="icon" type="image/png" sizes="32x32" href="{% static 'guide/images/favicon-32x32.png' %}">
-	<link rel="icon" type="image/png" sizes="16x16" href="{% static 'guide/images/favicon-16x16.png' %}">
-	<link rel="manifest" href="{% static 'guide/images/site.webmanifest' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'guide/images/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'guide/images/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'guide/images/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'guide/images/site.webmanifest' %}">
 
     <link href="{% static 'guide/css/stile.css' %}" rel="stylesheet">
 </head>
 <body>
 <div class="container">
+{% include 'includes/messages.html' %}
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
             <span class="fs-4">{{ title }}</span>
         </a>
 
         <ul class="nav nav-pills">
-            <li class="nav-item"><a href="{% url 'home' %}"
-                                    class="nav-link {% if  request.resolver_match.url_name == 'home' %}active{% endif %}">Главная</a>
+            <li class="nav-item">
+                <a href="{% url 'home' %}"
+                   class="nav-link {% if  request.resolver_match.url_name == 'home' %}active{% endif %}">Главная
+                </a>
             </li>
-            <li class="nav-item"><a href="{% url 'vacancies' %}"
-                                    class="nav-link {% if  request.resolver_match.url_name == 'vacancies' %}active{% endif %}">Вакансии</a>
+            <li class="nav-item">
+                <a href="{% url 'vacancies' %}"
+                   class="nav-link {% if  request.resolver_match.url_name == 'vacancies' %}active{% endif %}">Вакансии
+                </a>
             </li>
-            <li class="nav-item"><a href="{% url 'skills' %}"
-                                    class="nav-link {% if  request.resolver_match.url_name == 'skills' %}active{% endif %}">Навыки</a>
+            <li class="nav-item">
+                <a href="{% url 'skills' %}"
+                   class="nav-link {% if  request.resolver_match.url_name == 'skills' %}active{% endif %}">Навыки
+                </a>
             </li>
-            <li class="nav-item"><a href="{% url 'analysis' %}"
-                                    class="nav-link {% if  request.resolver_match.url_name == 'analysis' %}active{% endif %}">Анализ
-                навыков</a></li>
-            <li class="nav-item"><a href="{% url 'querys' %}"
-                                    class="nav-link {% if  request.resolver_match.url_name == 'querys' %}active{% endif %}">Запросы</a>
+            <li class="nav-item">
+                <a href="{% url 'analysis' %}"
+                   class="nav-link {% if  request.resolver_match.url_name == 'analysis' %}active{% endif %}">Анализ
+                    навыков
+                </a>
             </li>
-            <li class="nav-item"><a href="{% url 'about' %}"
-                                    class="nav-link {% if  request.resolver_match.url_name == 'about' %}active{% endif %}">О
-                проекте</a></li>
+            <li class="nav-item">
+                <a href="{% url 'querys' %}"
+                   class="nav-link {% if  request.resolver_match.url_name == 'querys' %}active{% endif %}">Запросы
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'aggregators' %}"
+                   class="nav-link {% if  request.resolver_match.url_name == 'aggregators' %}active{% endif %}">Агрегаторы
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'about' %}"
+                   class="nav-link {% if  request.resolver_match.url_name == 'about' %}active{% endif %}">О проекте
+                </a>
+            </li>
         </ul>
     </header>
 </div>
