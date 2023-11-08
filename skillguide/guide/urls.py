@@ -7,6 +7,7 @@ urlpatterns = [
     path('vacancies/<int:vacancy_id>', views.vacancy, name='vacancy'),
     path('skills/', views.skills, name='skills'),
     path('querys/', views.querys, name='querys'),
+    path('aggregators/', views.aggregators, name='aggregators'),
     path('analysis/', views.analysis, name='analysis'),
     path('about/', views.about, name='about'),
     path('vacancy_response/<int:vacancy_id>/<type_gpt>', views.vacancy_response, name='response'),
