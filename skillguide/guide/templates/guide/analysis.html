@@ -1,5 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <!-- ======= Analysis Section ======= -->
+    <section id="analysis" class="services">
+        <div class="container">
+            {% include 'guide/includes/admin/upload_images.html' %}
+
+            {% for key, value in images.items %}
+                <img src="{{ value }}" class="img-fluid" alt="{{ key }}">
+            {% endfor %}
+        </div>
+    </section><!-- End Analysis Section -->
 
 {% endblock %}

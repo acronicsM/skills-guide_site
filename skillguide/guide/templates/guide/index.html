@@ -69,12 +69,14 @@
         <h2>Анализ</h2>
         <div class="row">
             <div class="col-md-6">
-                <img src="путь_к_изображению_1" alt="Изображение 1" class="img-fluid mb-2">
-                <img src="путь_к_изображению_2" alt="Изображение 2" class="img-fluid mb-2">
+                {% if 'salary' in images %}
+                    <img src="{{ images.salary }}" alt="salary" class="img-fluid mb-2">
+                {% endif %}
             </div>
             <div class="col-md-6">
-                <img src="путь_к_изображению_3" alt="Изображение 3" class="img-fluid mb-2">
-                <img src="путь_к_изображению_4" alt="Изображение 4" class="img-fluid mb-2">
+                {% if 'vacancies' in images %}
+                    <img src="{{ images.vacancies }}" alt="vacancies" class="img-fluid mb-2">
+                {% endif %}
             </div>
         </div>
     </div>
