@@ -5,26 +5,26 @@
     <!-- ======= Vacancy Section ======= -->
     <section id="vacancy" class="services">
         <div class="container">
-            <h1>{{ vacancy_data.name }}</h1>
+            <h1>{{ object_list.name }}</h1>
 
             <div class="salary-date">
-                <p class="fs-3 text-danger"><strong>{{ vacancy_data.salary }}</strong></p>
-                <p class="text-muted">{{ vacancy_data.date }}</p>
+                <p class="fs-3 text-danger"><strong>{{ object_list.salary }}</strong></p>
+                <p class="text-muted">{{ object_list.date }}</p>
             </div>
 
-            <p>Требуемый опыт работы: {{ vacancy_data.experience }}</p>
-            <p>{{ vacancy_data.employment }}, {{ vacancy_data.schedule }}</p>
+            <p>Требуемый опыт работы: {{ object_list.experience }}</p>
+            <p>{{ object_list.employment }}, {{ object_list.schedule }}</p>
 
-            <a href="{{ vacancy_data.url }}" class="btn btn-info" role="button">Откликнуться</a>
+            <a href="{{ object_list.url }}" class="btn btn-info" role="button">Откликнуться</a>
             <a href="{% url 'response' vacancy_id 'yandex'%}" class="btn btn-info yandex" role="button">Сопроводительное письмо(Яндекс)</a>
             <a href="{% url 'response' vacancy_id 'openai'%}" class="btn btn-info openai" role="button">Сопроводительное письмо(OpenAI)</a>
             <a href="{% url 'interview' %}" class="btn btn-info" role="button">Тестовое собеседование</a>
 
             {% autoescape off %}
-                <p>{{ vacancy_data.description }}</p>
+                <p>{{ object_list.description }}</p>
             {% endautoescape %}
 
-            {% skills_tags vacancy_data.skills %}
+            {% skills_tags object_list.skills %}
 
             <br><br>
         </div>

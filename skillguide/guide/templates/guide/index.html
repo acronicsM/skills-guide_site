@@ -4,7 +4,7 @@
     <!-- Блок info -->
     <div class="container mt-4">
         <div class="alert alert-info">
-            Сегодня на сайте доступно {{ response.count_vacancies }} вакансий и {{ response.count_skills }} навыков
+            Сегодня на сайте доступно {{ object_list.count_vacancies }} вакансий и {{ object_list.count_skills }} навыков
         </div>
     </div>
 
@@ -12,7 +12,7 @@
     <div class="container mt-4">
         <h2>Топ вакансий</h2>
         <div class="row">
-            {% for vacancy in response.top_vacancies %}
+            {% for vacancy in object_list.top_vacancies %}
                 <div class="col-lg-6 col-md-6">
                     <div class="top_card">
                         <div class="card-body">
@@ -38,7 +38,7 @@
     <div class="container mt-4">
         <h2>Топ навыков</h2>
         <div class="row">
-            {% for skill in response.top_skills %}
+            {% for skill in object_list.top_skills %}
                 <div class="col-md-2 col-lg-2">
                     <div class="card" style="margin-top: 1rem">
                         <!-- Карточка (border-primary - цвет границ карточки) -->
