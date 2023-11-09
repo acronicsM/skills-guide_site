@@ -19,3 +19,12 @@ class SkillColor(models.Model):
 
     def __str__(self):
         return f'{self.skill}:{self.background} / {self.color}'
+
+
+class UploadAPIImages(models.Model):
+    image = models.ImageField(upload_to='api/%Y/%m/%d/', verbose_name='Изображение')
+    type_image = models.CharField(max_length=30, unique=True, db_index=True, verbose_name='Тип файла')
+
+    class Meta:
+        verbose_name = 'API изображение'
+        verbose_name_plural = 'API изображения'

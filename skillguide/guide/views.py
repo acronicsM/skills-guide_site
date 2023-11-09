@@ -5,11 +5,16 @@ from .gpt_api.latter import get_letter
 from .common import index_dict
 from .skills_guide_api import get_api_response
 from .skillguide_api import admin_api
+from .models import UploadAPIImages
 
 
 def index(request):
+
+    f_type = ['salary', 'vacancies']
+
     data_dict = index_dict()
     data_dict['response'] = get_api_response('index')
+    data_dict['images'] = {f.type_image: f.image.url for f in UploadAPIImages.objects.filter(type_image__in=f_type).all()}
 
     return render(request, 'guide/index.html', context=data_dict)
 
@@ -82,7 +87,7 @@ def querys(request):
         if 'start_parser' in request.GET and request.GET['start_parser'] == 'True':
             admin_api.start_parser(request)
         elif 'delete_queries' in request.GET:
-            admin_api.delete_aggregators(request, int(request.GET['delete_queries']))
+            admin_api.delete_queries(request, int(request.GET['delete_queries']))
     elif request.method == 'POST':
         admin_api.add_aggregators(request)
 
@@ -107,7 +112,15 @@ def aggregators(request):
 
 
 def analysis(request):
+    if request.method == 'GET' and 'upload_images' in request.GET and request.GET['upload_images'] == 'True':
+        admin_api.upload_images(request)
+
+    f_type = ['salary', 'vacancies']
+
     data_dict = index_dict()
+    data_dict['response'] = get_api_response('index')
+    data_dict['images'] = {f.type_image: f.image.url for f in
+                           UploadAPIImages.objects.filter(type_image__in=f_type).all()}
 
     return render(request, 'guide/analysis.html', context=data_dict)
 
