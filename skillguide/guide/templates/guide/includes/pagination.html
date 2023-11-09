@@ -1,6 +1,6 @@
 <nav aria-label="pagination" class="mx-auto" style="width: 200px;">
     <ul class="pagination pagination-lg">
-        {% for page in pages %}
+        {% for page in object_list.pages %}
             {% if page.active %}
                 <li class="page-item active" aria-current="page">
                     <span class="page-link">{{ page.page }}</span>
