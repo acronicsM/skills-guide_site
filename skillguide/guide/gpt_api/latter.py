@@ -18,7 +18,7 @@ async def get_openapi_answer(description: dict):
     description_text = remove_html_tags(description['description'])
 
     content = f'''
-     ищу работу python разработчика и мне нужна помощь в написании сопроводительного письма к моему письму на вакансию:
+    Мне нужно приложить сопроводительное письмо к моему резюме для отклика на вакансию:
     {description_text}
     '''
 
@@ -28,8 +28,8 @@ async def get_openapi_answer(description: dict):
 async def get_yandex_answer(description: dict):
     description_text = remove_html_tags(description['description'])
 
-    content = f'Напиши сопровотельное письмо к моему резюме на вакансию:\n{description_text}'
-    instruction = 'Я ищу работу python разработчика и мне нужна помощь в написании сопроводительного письма'
+    content = f'Напиши такое письмо на вакансию:\n{description_text}'
+    instruction = 'Мне нужно приложить сопроводительное письмо к моему резюме для отклика на вакансию'
 
     return await yandexgpt_answer(content=content, instruction=instruction)
 
