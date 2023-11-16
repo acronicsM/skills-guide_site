@@ -1,8 +1,9 @@
 import json
+import os
 
 import aiohttp
 
-SERVER_GPT = 'http://127.0.0.1:7000'
+SERVER_GPT = os.environ.get('SERVER_GPT')
 
 
 async def answer(content: str):
