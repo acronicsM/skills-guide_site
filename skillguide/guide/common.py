@@ -1,8 +1,9 @@
+import os
 from datetime import datetime
 
 Title = 'Python Skills Tracker'
 
-SERVER_ARD = 'http://127.0.0.1:5000'
+SERVER_ARD = os.environ.get('SERVER_PARSE')
 
 KEY_ROLES = {'8ba12641a0ba50c4b86006c6': 'admin', 'user': 'user'}
 API_SECRET_KEY = 'dsfdsf4dffdsf4DFdf09034DSFf343edcfVbhkmnnppp'
