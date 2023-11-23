@@ -30,10 +30,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', default='True') == 'True'
 
-ALLOWED_HOSTS = []
-
-if not DEBUG:
-    ALLOWED_HOSTS = [i for i in os.environ.get('ALLOWED_HOSTS', default='.localhost 127.0.0.1 [::1]').split()]
+ALLOWED_HOSTS = [i for i in os.environ.get('ALLOWED_HOSTS', default='.localhost 127.0.0.1 [::1]').split()]
 
 INTERNAL_IPS = ['127.0.0.1']
 
