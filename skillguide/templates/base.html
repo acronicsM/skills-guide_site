@@ -19,7 +19,7 @@
 </head>
 <body>
 <div class="container">
-{% include 'includes/messages.html' %}
+    {% include 'includes/messages.html' %}
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
             <span class="fs-4">Python Skills Tracker</span>
@@ -62,6 +62,11 @@
                    class="nav-link {% if  request.resolver_match.url_name == 'about' %}active{% endif %}">О проекте
                 </a>
             </li>
+            {% if user.is_authenticated %}
+                <li class="nav-link"> {{ user.username }} | <a href="{% url 'users:logout' %}">Выйти</a></li>
+            {% else %}
+                <li class="nav-link"><a href="{% url 'users:login' %}">Войти</a></li>
+            {% endif %}
         </ul>
     </header>
 </div>

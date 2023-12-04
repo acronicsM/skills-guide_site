@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'guide.apps.GuideConfig',
+    'users.apps.UsersConfig',
     'debug_toolbar',
 ]
 
@@ -153,3 +154,6 @@ MESSAGE_TAGS = {
 }
 
 JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY')
+
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
