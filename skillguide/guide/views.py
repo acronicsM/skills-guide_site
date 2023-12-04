@@ -7,33 +7,27 @@ from .gpt_api.latter import get_letter
 from .skills_guide_api import get_api_response
 from .skillguide_api import admin_api
 from .models import UploadAPIImages
+from .utils import DataMixin
 
 
-class GuideHome(ListView):
+class GuideHome(DataMixin, ListView):
+    f_type = ['salary', 'vacancies']
     template_name = 'guide/index.html'
+    title_page = 'Python Skills Tracker'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Python Skills Tracker'
-        context['images'] = {f.type_image: f.image.url
-                             for f in UploadAPIImages.objects.filter(type_image__in=['salary', 'vacancies']).all()
-                             }
-        return context
+        images = {f.type_image: f.image.url for f in UploadAPIImages.objects.filter(type_image__in=self.f_type).all()}
+        return self.get_mixin_context(context, images=images)
 
     def get_queryset(self):
         return get_api_response('index')
 
 
-class GuideVacancies(ListView):
+class GuideVacancies(DataMixin, ListView):
     template_name = 'guide/vacancies.html'
     url_name = 'vacancies'
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Вакансии'
-        context['url_name'] = self.url_name
-
-        return context
+    title_page = 'Вакансии'
 
     def get_queryset(self):
         params = {
@@ -45,57 +39,46 @@ class GuideVacancies(ListView):
         return get_api_response(self.url_name, **params)
 
 
-class GuideVacancy(ListView):
+class GuideVacancy(DataMixin, ListView):
     template_name = 'guide/vacancy.html'
+    title_page = 'Вакансия'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['vacancy_id'] = self.kwargs['vacancy_id']
-
-        return context
+        return self.get_mixin_context(context, vacancy_id=self.kwargs['vacancy_id'])
 
     def get_queryset(self):
         return get_api_response('vacancy', vacancy_id=self.kwargs['vacancy_id'])
 
 
-class CoverLetter(View):
+class CoverLetter(DataMixin, View):
     template_name = 'guide/vacancy_response.html'
 
     async def get(self, request, *args, **kwargs):
         context = await self.get_context_data(kwargs['vacancy_id'], kwargs['type_gpt'])
         return render(request, template_name=self.template_name, context=context)
 
-    @staticmethod
-    async def get_context_data(vacancy_id, type_gpt):
-        context = dict()
-        context['title'] = 'Сопроводительное письмо'
-        context['vacancy_data'] = get_api_response('vacancy', vacancy_id=vacancy_id)
-        context['vacancy_id'] = vacancy_id
+    async def get_context_data(self, vacancy_id, type_gpt):
+        vacancy_data = get_api_response('vacancy', vacancy_id=vacancy_id)
+        latter = await get_letter(vacancy_data, type_gpt)
 
-        latter = await get_letter(context['vacancy_data'], type_gpt)
-
-        context['latter'] = latter
-
-        return context
+        return self.get_mixin_context(dict(),
+                                      vacancy_id=vacancy_id,
+                                      vacancy_data=vacancy_data,
+                                      latter=latter,
+                                      title='Сопроводительное письмо',
+                                      )
 
 
-class Interview(TemplateView):
+class Interview(DataMixin, TemplateView):
     template_name = 'guide/vacancy_interview.html'
-    extra_context = {
-        'title': 'Тестовое собеседование',
-    }
+    title_page = 'Тестовое собеседование'
 
 
-class GuideSkills(ListView):
+class GuideSkills(DataMixin, ListView):
     template_name = 'guide/skills.html'
     url_name = 'skills'
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Навыки'
-        context['url_name'] = self.url_name
-
-        return context
+    title_page = 'Навыки'
 
     def get_queryset(self):
         params = {
@@ -105,7 +88,7 @@ class GuideSkills(ListView):
         return get_api_response('tags', **params)
 
 
-class Queries(View):
+class Queries(DataMixin, View):
     template_name = 'guide/querys.html'
 
     def get(self, request):
@@ -120,16 +103,14 @@ class Queries(View):
         admin_api.add_queries(request)
         return render(request, template_name=self.template_name, context=self.get_context_data())
 
-    @staticmethod
-    def get_context_data():
-        context = dict()
-        context['title'] = 'Поисковые запросы'
-        context['querys'] = get_api_response('querys')
-
-        return context
+    def get_context_data(self):
+        return self.get_mixin_context(dict(),
+                                      querys=get_api_response('querys'),
+                                      title='Поисковые запросы',
+                                      )
 
 
-class Aggregators(View):
+class Aggregators(DataMixin, View):
     template_name = 'guide/aggregators.html'
 
     def get(self, request):
@@ -144,16 +125,14 @@ class Aggregators(View):
         admin_api.add_aggregators(request)
         return render(request, template_name=self.template_name, context=self.get_context_data())
 
-    @staticmethod
-    def get_context_data():
-        context = dict()
-        context['title'] = 'Агрегаторы вакансий'
-        context['aggregators'] = get_api_response('aggregators')
-
-        return context
+    def get_context_data(self):
+        return self.get_mixin_context(dict(),
+                                      querys=get_api_response('aggregators'),
+                                      title='Агрегаторы вакансий',
+                                      )
 
 
-class Analysis(View):
+class Analysis(DataMixin, View):
     f_type = ['salary', 'vacancies']
     template_name = 'guide/analysis.html'
 
@@ -164,19 +143,16 @@ class Analysis(View):
         return render(request, template_name=self.template_name, context=self.get_context_data())
 
     def get_context_data(self):
-        context = dict()
-        context['title'] = 'Визуальный анализ навыков'
-        context['images'] = {f.type_image: f.image.url for f in
-                             UploadAPIImages.objects.filter(type_image__in=self.f_type).all()}
+        return self.get_mixin_context(dict(),
+                                      images={f.type_image: f.image.url for f in
+                                              UploadAPIImages.objects.filter(type_image__in=self.f_type).all()},
+                                      title='Визуальный анализ навыков',
+                                      )
 
-        return context
 
-
-class About(TemplateView):
+class About(DataMixin, TemplateView):
     template_name = 'guide/about.html'
-    extra_context = {
-        'title': 'О проекте',
-    }
+    title_page = 'О проекте'
 
 
 def page_not_found(request, exception):
